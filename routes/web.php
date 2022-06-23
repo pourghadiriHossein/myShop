@@ -13,6 +13,7 @@ use App\Http\Controllers\UserController;
 use App\Http\Controllers\AdminController;
 use App\Http\Controllers\CartController;
 
+Route::get('test',[Controller::class,'test']);
 //session route
 Route::get('/session/{product_id}/{quantity}/{session_task}',[Controller::class,'session'])->name('session');
 
@@ -35,7 +36,9 @@ Route::get('cart',[CartController::class, 'cartIndex'])->name('cartIndex');
 //checkout
 Route::get('checkout',[CheckoutController::class, 'checkoutIndex'])->name('checkoutIndex');
 Route::post('checkout',[CheckoutController::class, 'postCheckout'])->name('postCheckout');
+//IDPay
 Route::get('gateway/{Transaction_ID}',[CheckoutController::class,'sendForPay'])->name('sendForPay');
+Route::post('callback',[CheckoutController::class,'callback'])->name('callback');
 
 //login & register
 Route::get('/login',[UserController::class, 'login'])->name('login');

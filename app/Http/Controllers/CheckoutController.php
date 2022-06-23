@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Models\City;
+use App\Models\Gateway;
 use App\Models\Region;
 use App\Models\Transaction;
 use App\Models\Zone;
@@ -74,15 +75,25 @@ class CheckoutController extends Controller
             }
             $newTransaction = new Transaction();
             $newTransaction->order_id = $newOrder->id;
-            $newTransaction->price = $newOrder->pay_price;
-            $newTransaction->resnum = Carbon::now();
-            $newTransaction->refnum = null;
-            $newTransaction->status = 0;
-            $newTransaction->message = 'در انتظار پرداخت';
+            $newTransaction->amount = $newOrder->pay_price;
             $newTransaction->save();
-            Tool::clean();
-            Tool::cleanTokenDiscount();
-            return redirect(route('adminVisitTransaction'));
+            $newGateway = new Gateway();
+            $result = $newGateway->start($newTransaction->id,$newOrder->pay_price);
+            if (isset($result->error_code))
+            {
+                $newTransaction->status = $result->error_code;
+                $newTransaction->update();
+                Tool::clean();
+                Tool::cleanTokenDiscount();
+                return redirect(route('adminVisitTransaction'));
+            }
+            else{
+                $newTransaction->IDPay_id = $result->id;
+                $newTransaction->update();
+                Tool::clean();
+                Tool::cleanTokenDiscount();
+                return redirect($result->link);
+            }
         }else
             return redirect(route('publicHome'));
     }
@@ -90,6 +101,45 @@ class CheckoutController extends Controller
     public function sendForPay($transactionID)
     {
         $transaction = Transaction::find($transactionID);
-        dd($transaction);
+        $newGateway = new Gateway();
+        $result = $newGateway->start($transaction->id,$transaction->amount);
+        if (isset($result->error_code))
+        {
+            $transaction->status = $result->error_code;
+            $transaction->save();
+            return redirect(route('adminVisitTransaction'));
+        }
+        else{
+            $transaction->IDPay_id = $result->id;
+            $transaction->save();
+            return redirect($result->link);
+        }
+    }
+
+    public function callback(Request $request)
+    {
+        if (!$request->input('order_id'))
+            return redirect(route('adminVisitTransaction'));
+        $transaction = Transaction::find($request->input('order_id'));
+        $IDPayID = $request->input('id');
+        $orderID = $request->input('order_id');
+        $verify = new Gateway();
+        $result = $verify->done($IDPayID, $orderID);
+        if (isset($result->error_code))
+        {
+            $transaction->status = $result->error_code;
+            $transaction->save();
+            return redirect(route('adminVisitTransaction'));
+        }
+        else {
+            $transaction->status = $result->status;
+            $transaction->IDPay_track_id = $result->track_id;
+            $transaction->IDPay_id = $result->id;
+            $transaction->card_no = $result->payment->card_no;
+            $transaction->pay_date = $result->date;
+            $transaction->verify_date = $result->verify->date;
+            $transaction->save();
+            return redirect(route('adminVisitTransaction'));
+        }
     }
 }

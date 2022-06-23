@@ -17,9 +17,12 @@ return new class extends Migration
             $table->id();
             $table->unsignedBigInteger('order_id');
             $table->decimal('amount',22,2);
-            $table->string('resnum');
-            $table->string('refnum');
-            $table->unsignedTinyInteger('status')->default(0);
+            $table->unsignedTinyInteger('status')->default(1);
+            $table->unsignedBigInteger('IDPay_track_id')->nullable();
+            $table->string('IDPay_id')->nullable();
+            $table->string('card_no')->nullable();
+            $table->string('pay_date')->nullable();
+            $table->string('verify_date')->nullable();
             $table->timestamps();
             $table->softDeletes();
 

@@ -62,11 +62,13 @@
                                 <th style="text-align: right">شناسه</th>
                                 <th style="text-align: right">شناسه فاکتور</th>
                                 <th style="text-align: right">مبلغ پرداخت شده</th>
-                                <th style="text-align: right">resnum</th>
-                                <th style="text-align: right">refnum</th>
-                                <th style="text-align: right">پیام</th>
+                                <th style="text-align: right">کد رهگیری</th>
+                                <th style="text-align: right">شناسه IDPay</th>
+                                <th style="text-align: right">شماره کارت</th>
+                                <th style="text-align: right">زمان پرداخت</th>
+                                <th style="text-align: right">زمان تایید پرداخت</th>
                                 <th style="text-align: right">وضعیت</th>
-
+                                <th style="text-align: right">امکانات</th>
                             </tr>
                             </thead>
                             <tfoot style="direction: rtl;">
@@ -74,10 +76,13 @@
                                 <th style="text-align: right">شناسه</th>
                                 <th style="text-align: right">شناسه فاکتور</th>
                                 <th style="text-align: right">مبلغ پرداخت شده</th>
-                                <th style="text-align: right">resnum</th>
-                                <th style="text-align: right">refnum</th>
-                                <th style="text-align: right">پیام</th>
+                                <th style="text-align: right">کد رهگیری</th>
+                                <th style="text-align: right">شناسه IDPay</th>
+                                <th style="text-align: right">شماره کارت</th>
+                                <th style="text-align: right">زمان پرداخت</th>
+                                <th style="text-align: right">زمان تایید پرداخت</th>
                                 <th style="text-align: right">وضعیت</th>
+                                <th style="text-align: right">امکانات</th>
                             </tr>
                             </tfoot>
                             <tbody>
@@ -85,16 +90,20 @@
                             <tr>
                                 <td>{{ $transaction->id }}</td>
                                 <td>{{ $transaction->order_id }}</td>
-                                <td>{{ $transaction->price }} ریال</td>
-                                <td>{{ $transaction->resnum }}</td>
-                                <td>{{ $transaction->refnum }}</td>
-                                <td>{{ $transaction->message }}</td>
+                                <td>{{ $transaction->amount }} ریال</td>
+                                <td>{{ $transaction->IDPay_track_id }}</td>
+                                <td>{{ $transaction->IDPay_id }}</td>
+                                <td>{{ $transaction->card_no }}</td>
+                                <td>{{ $transaction->pay_date }}</td>
+                                <td>{{ $transaction->verify_date }}</td>
                                 <td>
-                                    @if($transaction->status == 0)
-                                        <p class="label label-warning" style="width: 250px">غیر فعال</p>
+                                    {!!\App\Models\Gateway::gatewayStatusCode($transaction->status)!!}
+                                </td>
+                                <td>
+                                    @if($transaction->status != 100 && $transaction->status != 101)
                                         <a  class="label label-info" href="{{route('sendForPay',$transaction->id)}}">پرداخت</a>
+                                    @else
                                     @endif
-                                    @if($transaction->status == 1)<p class="label label-success" style="width: 250px">فعال</p> @endif
                                 </td>
                             </tr>
                             @endforeach
