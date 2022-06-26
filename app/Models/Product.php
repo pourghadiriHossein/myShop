@@ -38,13 +38,13 @@ class Product extends Model
         return $this->hasMany(Comment::class);
     }
 
-    public function orderListItems()
-    {
-        return $this->belongsToMany(OrderListItem::class, 'product_order_list_item');
-    }
-
     public function category()
     {
         return $this->belongsTo(Category::class);
+    }
+
+    public function orderListItems()
+    {
+        return $this->hasMany(OrderListItem::class);
     }
 }

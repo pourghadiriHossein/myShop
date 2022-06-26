@@ -1,4 +1,4 @@
-@extends('admin.adminLayout')
+@extends('admin.layout.adminLayout')
 
 @section('content')
     <section id="main-content">
@@ -17,21 +17,24 @@
 
                             <div class="form">
 
-                                <form class="form-horizontal" action="{{route('adminPostUpdateRole',$role->id)}}" method="post" data-toggle="validator" id="user-form">
+                                <form class="form-horizontal" action="{{route('adminPostUpdateRole',$role->id)}}"
+                                      method="post" data-toggle="validator" id="user-form">
 
                                     {{csrf_field()}}
 
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">نام نقش</label>
                                         <div class="col-lg-10">
-                                            <input value="{{$role->name}}" type="text" required="required" name="name" class="form-control" placeholder="نام نقش">
+                                            <input value="{{$role->name}}" type="text" required="required" name="name"
+                                                   class="form-control" placeholder="نام نقش">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">شرح نقش</label>
                                         <div class="col-lg-10">
-                                            <input value="{{$role->guard_name}}" type="text" name="guard_name" class="form-control" placeholder="شرح نقش">
+                                            <input value="{{$role->guard_name}}" type="text" name="guard_name"
+                                                   class="form-control" placeholder="شرح نقش">
                                         </div>
                                     </div>
 
@@ -39,14 +42,16 @@
                                         <label class="col-lg-2 control-label">سطوح دسترسی</label>
                                         <div class="col-lg-10">
                                             @foreach($permissions as $permission)
-                                            <label class="access_lvl">
-                                                <input type="checkbox" name="permissions[]" @if(in_array($permission->name,$selectedPermission)) checked @endif value="{{$permission->id}}"> {{$permission->name}}
-                                            </label>
-                                            <br/>
-                                                @endforeach
+                                                <label class="access_lvl">
+                                                    <input type="checkbox" name="permissions[]"
+                                                           @if(in_array($permission->name,$selectedPermission)) checked
+                                                           @endif value="{{$permission->id}}"> {{$permission->name}}
+                                                </label>
+                                                <br/>
+                                            @endforeach
                                         </div>
                                     </div>
-                                    <input type="submit" class="finish btn btn-success" value="ذخیره" />
+                                    <input type="submit" class="finish btn btn-success" value="ذخیره"/>
                                 </form>
 
                             </div>
@@ -75,7 +80,7 @@
     <script type="text/javascript" src="{{ asset('/adminassets/') }}/js/multiselect.min.js"></script>
 
     <script type="text/javascript">
-        jQuery(document).ready(function($) {
+        jQuery(document).ready(function ($) {
             $('#search1').multiselect({
                 search: {
                     left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
@@ -85,7 +90,7 @@
         });
     </script>
     <script type="text/javascript">
-        jQuery(document).ready(function($) {
+        jQuery(document).ready(function ($) {
             $('#search2').multiselect({
                 search: {
                     left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
@@ -111,6 +116,5 @@
             });
         });
     </script>
-
 
 @endsection

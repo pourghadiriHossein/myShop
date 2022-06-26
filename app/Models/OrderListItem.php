@@ -22,13 +22,13 @@ class OrderListItem extends Model
         return $this->belongsTo(User::class);
     }
 
-    public function products()
-    {
-        return $this->belongsToMany(Product::class, 'product_order_list_item');
-    }
-
     public function order()
     {
         return $this->belongsTo(Order::class);
+    }
+
+    public function product()
+    {
+        return $this->belongsTo(Product::class);
     }
 }

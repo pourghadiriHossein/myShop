@@ -7,23 +7,23 @@
     <meta name="description" content="">
     <meta name="author" content="Hamidreza Saberi">
     <meta name="keyword" content="404">
-    <link rel="shortcut icon" href="{{ asset('/adminassets/') }}/img/favicon.html">
+    <link rel="shortcut icon" href="{{asset('admin')}}/img/favicon.html">
 
-    <title>404</title>
+    <title>403</title>
 
     <!-- Bootstrap core CSS -->
-    <link href="{{ asset('/adminassets/') }}/css/bootstrap.min.css" rel="stylesheet">
-    <link href="{{ asset('/adminassets/') }}/css/bootstrap-reset.css" rel="stylesheet">
+    <link href="{{asset('admin')}}/css/bootstrap.min.css" rel="stylesheet">
+    <link href="{{asset('admin')}}/css/bootstrap-reset.css" rel="stylesheet">
     <!--external css-->
-    <link href="{{ asset('/adminassets/') }}/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
+    <link href="{{asset('admin')}}/assets/font-awesome/css/font-awesome.css" rel="stylesheet" />
     <!-- Custom styles for this template -->
-    <link href="{{ asset('/adminassets/') }}/css/style.css" rel="stylesheet">
-    <link href="{{ asset('/adminassets/') }}/css/style-responsive.css" rel="stylesheet" />
+    <link href="{{asset('admin')}}/css/style.css" rel="stylesheet">
+    <link href="{{asset('admin')}}/css/style-responsive.css" rel="stylesheet" />
 
     <!-- HTML5 shim and Respond.js IE8 support of HTML5 tooltipss and media queries -->
     <!--[if lt IE 9]>
-    <script src="{{ asset('/adminassets/') }}/js/html5shiv.js"></script>
-    <script src="{{ asset('/adminassets/') }}/js/respond.min.js"></script>
+    <script src="{{asset('admin')}}/js/html5shiv.js"></script>
+    <script src="{{asset('admin')}}/js/respond.min.js"></script>
     <![endif]-->
 </head>
 

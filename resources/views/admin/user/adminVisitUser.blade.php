@@ -1,4 +1,4 @@
-@extends('admin.adminLayout')
+@extends('admin.layout.adminLayout')
 
 @section('content')
     <style type="text/css" class="init">
@@ -10,49 +10,49 @@
         }
 
     </style>
-    <script type="text/javascript" language="javascript" src="{{asset('/')}}adminassets/js/jq.dataTable.min.js">
+    <script type="text/javascript" language="javascript" src="{{asset('admin')}}/js/jq.dataTable.min.js">
     </script>
-    <script type="text/javascript" language="javascript" src="{{asset('/')}}adminassets/js/dataTables.bootstrap.min.js">
+    <script type="text/javascript" language="javascript" src="{{asset('admin')}}/js/dataTables.bootstrap.min.js">
     </script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Setup - add a text input to each footer cell
-            $('#orderTable tfoot th').each( function () {
+            $('#orderTable tfoot th').each(function () {
                 var title = $(this).text();
-                $(this).html( '<input class="form-control input-sm" type="text" placeholder="'+title+'" />' );
-            } );
+                $(this).html('<input class="form-control input-sm" type="text" placeholder="' + title + '" />');
+            });
 
             // DataTable
-            var table = $('#orderTable').DataTable( {
-                "order": [[ 0, "desc" ]]
-            } );
+            var table = $('#orderTable').DataTable({
+                "order": [[0, "desc"]]
+            });
 
             // Apply the search
-            table.columns().every( function () {
+            table.columns().every(function () {
                 var that = this;
 
-                $( 'input', this.footer() ).on( 'keyup change', function () {
-                    if ( that.search() !== this.value ) {
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
                         that
-                            .search( this.value )
+                            .search(this.value)
                             .draw();
                     }
-                } );
-            } );
-        } );
+                });
+            });
+        });
     </script>
     <section id="main-content">
         <section class="wrapper">
             <section class="panel">
                 <header class="panel-heading">
-                    مدیریت  کاربران
+                    مدیریت کاربران
 
 
                 </header>
                 <div class="container">
 
 
-                    <div   class="col-xs-12 col-sm-12 col-md-12 table-responsive">
+                    <div class="col-xs-12 col-sm-12 col-md-12 table-responsive">
                         <br/>
                         @include('include.showError')
 
@@ -87,7 +87,9 @@
                                     <td>{{$user->name}}</td>
                                     <td>{{$user->phone}}</td>
                                     <td>{{$user->email}}</td>
-                                    <td><p class="label label-default" style="background-color: gold">{{\App\Models\Tool::getRoleName($user->id)}}</p></td>
+                                    <td><p class="label label-default"
+                                           style="background-color: gold">{{\App\Models\Tool::getRoleName($user->id)}}</p>
+                                    </td>
                                     <td>
                                         @if($user->status == 0)
                                             <p class="label label-danger" style="width: 250px">غیر فعال</p>
@@ -95,7 +97,8 @@
                                             <p class="label label-success" style="width: 250px">فعال</p>
                                         @endif
                                     </td>
-                                    <td> <a class="label label-warning" href="{{route('adminUpdateUser',$user->id)}}">ویرایش</a></td>
+                                    <td><a class="label label-warning" href="{{route('adminUpdateUser',$user->id)}}">ویرایش</a>
+                                    </td>
                                 </tr>
                             @endforeach
                             </tbody>
@@ -106,7 +109,6 @@
                 </div>
 
 
-
             </section>
         </section>
     </section>
@@ -115,19 +117,19 @@
 
         //owl carousel
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#owl-demo").owlCarousel({
-                navigation : true,
-                slideSpeed : 300,
-                paginationSpeed : 400,
-                singleItem : true
+                navigation: true,
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                singleItem: true
 
             });
         });
 
         //custom select box
 
-        $(function(){
+        $(function () {
             $('select.styled').customSelect();
         });
 

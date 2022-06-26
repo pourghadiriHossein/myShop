@@ -39,7 +39,7 @@
             <div data-original-title="برای باز و بسته شدن منو کلیک کنید" data-placement="left" class="icon-reorder tooltips"></div>
         </div>
         <!--logo start-->
-        <a href="#" class="logo">  مدیریت <span> SHOP</span></a>
+        <a href="" class="logo">  مدیریت <span> SHOP</span></a>
         <!--logo end-->
 
         <div class="top-nav ">
@@ -83,7 +83,6 @@
                     @else
                     class="sub-menu">
                     @endif
-                >
                     <a href="javascript:;" class="">
                         <i class="icon-user"></i>
                         <span>کاربرها</span>
@@ -91,10 +90,10 @@
                     </a>
                     <ul class="sub">
                         <li><a href="{{route('adminVisitUser')}}" style="color: #f2f2f2">لیست کاربران</a></li>
-                        <li><a href="{{route('adminAddUser')}}" style="color: #f2f2f2">افزودن کاربر</a></li>
+                        @role('admin')<li><a href="{{route('adminAddUser')}}" style="color: #f2f2f2">افزودن کاربر</a></li>@endrole
                     </ul>
                 </li>
-                <li @if(Route::currentRouteName() == 'adminVisitPermission')
+                @role('admin')<li @if(Route::currentRouteName() == 'adminVisitPermission')
                     class="sub-menu active"
                     @elseif(Route::currentRouteName() == 'adminAddPermission')
                     class="sub-menu active"
@@ -121,9 +120,9 @@
                         <li> <a href="{{route('adminVisitRole')}}" style="color: #f2f2f2">مدیریت نقش</a></li>
                         <li> <a href="{{route('adminAddRole')}}" style="color: #f2f2f2">افزودن نقش</a></li>
                     </ul>
-                </li>
+                </li>@endrole
 
-                <li @if(Route::currentRouteName() == 'adminVisitCategory')
+                @role('admin')<li @if(Route::currentRouteName() == 'adminVisitCategory')
                     class="sub-menu active"
                     @elseif(Route::currentRouteName() == 'adminAddCategory')
                     class="sub-menu active"
@@ -144,9 +143,9 @@
                         <li><a href="{{route('adminVisitCategory')}}" style="color: #f2f2f2">لیست دسته ها</a></li>
                         <li><a href="{{route('adminAddCategory')}}" style="color: #f2f2f2">افزودن دسته</a></li>
                     </ul>
-                </li>
+                </li>@endrole
 
-                <li @if(Route::currentRouteName() == 'adminVisitTag')
+                @role('admin')<li @if(Route::currentRouteName() == 'adminVisitTag')
                     class="sub-menu active"
                     @elseif(Route::currentRouteName() == 'adminAddTag')
                     class="sub-menu active"
@@ -165,11 +164,11 @@
                         <li><a href="{{route('adminVisitTag')}}" style="color: #f2f2f2">لیست تگ ها</a></li>
                         <li><a href="{{route('adminAddTag')}}" style="color: #f2f2f2">افزودن تگ</a></li>
                     </ul>
-                </li>
+                </li>@endrole
 
 
 
-                <li @if(Route::currentRouteName() == 'adminVisitDiscount')
+                @role('admin')<li @if(Route::currentRouteName() == 'adminVisitDiscount')
                     class="sub-menu active"
                     @elseif(Route::currentRouteName() == 'adminAddDiscount')
                     class="sub-menu active"
@@ -188,9 +187,9 @@
                         <li><a href="{{route('adminVisitDiscount')}}" style="color: #f2f2f2">لیست تخفیف ها</a></li>
                         <li><a href="{{route('adminAddDiscount')}}" style="color: #f2f2f2">افزودن تخفیف</a></li>
                     </ul>
-                </li>
+                </li>@endrole
 
-                <li @if(Route::currentRouteName() == 'adminVisitProduct')
+                @role('admin')<li @if(Route::currentRouteName() == 'adminVisitProduct')
                         class="sub-menu active"
                         @elseif(Route::currentRouteName() == 'adminAddProduct')
                         class="sub-menu active"
@@ -209,7 +208,7 @@
                         <li><a href="{{route('adminVisitProduct')}}" style="color: #f2f2f2">لیست محصولات</a></li>
                         <li><a href="{{route('adminAddProduct')}}" style="color: #f2f2f2">افزودن محصولات</a></li>
                     </ul>
-                </li>
+                </li>@endrole
 
                 <li @if(Route::currentRouteName() == 'adminVisitComment')
                         class="sub-menu active"
@@ -229,7 +228,7 @@
                     </ul>
                 </li>
 
-                <li
+                @role('admin')<li
                         @if(Route::currentRouteName() == 'adminVisitRegion')
                         class="sub-menu active"
                         @elseif(Route::currentRouteName() == 'adminAddRegion')
@@ -263,7 +262,7 @@
                         <li><a href="{{ route('adminVisitCity') }}" style="color: #f2f2f2">لیست شهر</a></li>
                         <li><a href="{{ route('adminVisitZone') }}" style="color: #f2f2f2">لیست نواحی</a></li>
                     </ul>
-                </li>
+                </li>@endrole
                 <li
                         @if(Route::currentRouteName() == 'adminVisitAddress')
                         class="sub-menu active"
@@ -312,7 +311,7 @@
                         <li><a href="{{ route('adminVisitTransaction') }}" style="color: #f2f2f2">لیست تراکنش ها</a></li>
                     </ul>
                 </li>
-                <li
+                @role('admin')<li
                         @if(Route::currentRouteName() == 'adminVisitContact')
                         class="sub-menu active"
                         @else
@@ -327,7 +326,7 @@
                     <ul class="sub">
                         <li><a href="{{ route('adminVisitContact') }}" style="color: #f2f2f2">لیست تماس ها</a></li>
                     </ul>
-                </li>
+                </li>@endrole
 
             </ul>
             <!-- sidebar menu end-->

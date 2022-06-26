@@ -18,6 +18,7 @@ use App\Models\Order;
 use App\Models\Transaction;
 use App\Models\Contact;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\File;
 use Illuminate\Support\Facades\Hash;
 use Spatie\Permission\Models\Permission;
@@ -34,7 +35,13 @@ class AdminController extends Controller
     //user
     public function adminVisitUser()
     {
-        $users = User::all();
+        if (Auth::user()->hasRole('admin'))
+            $users = User::all();
+        else
+        {
+            $users = [];
+            $users [] = User::find(Auth::user()->id);
+        }
         return view('admin.user.adminVisitUser',compact('users'));
     }
 
@@ -67,14 +74,19 @@ class AdminController extends Controller
     public function adminPostUpdateUser(Request $request,$userId)
     {
         $updateUser = User::find($userId);
-        $updateUser->name = $request->input('name');
-        $updateUser->phone = $request->input('phone');
-        $updateUser->email = $request->input('email');
+        if ($request->input('name')!=null)
+            $updateUser->name = $request->input('name');
+        if ($request->input('phone')!=null)
+            $updateUser->phone = $request->input('phone');
+        if ($request->input('email')!=null)
+            $updateUser->email = $request->input('email');
         if ($request->input('password')!=null)
             $updateUser->password = Hash::make($request->input('password'));
-        $updateUser->status = $request->input('status');
+        if ($request->input('status')!=null)
+            $updateUser->status = $request->input('status');
         $updateUser->save();
-        $updateUser->syncRoles(Role::findById($request->input('role')));
+        if ($request->input('role')!=null)
+            $updateUser->syncRoles(Role::findById($request->input('role')));
         return redirect(route('adminVisitUser'));
     }
     //permission
@@ -373,7 +385,10 @@ class AdminController extends Controller
     //comment
     public function adminVisitComment()
     {
-        $comments = Comment::all();
+        if (Auth::user()->hasRole('admin'))
+            $comments = Comment::all();
+        else
+            $comments = Comment::where('user_id',Auth::user()->id)->get();
         return view('admin.comment.adminVisitComment',compact('comments'));
     }
     public function adminUpdateComment($commentID)
@@ -488,7 +503,10 @@ class AdminController extends Controller
     //address
     public function adminVisitAddress()
     {
-        $addresses = Address::all();
+        if (Auth::user()->hasRole('admin'))
+            $addresses = Address::all();
+        else
+            $addresses = Address::where('user_id',Auth::user()->id)->get();
         return view('admin.address.adminVisitAddress',compact('addresses'));
     }
     public function adminDeleteAddress($addressID)
@@ -500,13 +518,25 @@ class AdminController extends Controller
     //order
     public function adminVisitOrder()
     {
-        $orders = Order::all();
+        if (Auth::user()->hasRole('admin'))
+            $orders = Order::all();
+        else
+            $orders = Order::where('user_id',Auth::user()->id)->get();
         return view('admin.order.adminVisitOrder',compact('orders'));
     }
     //transaction
     public function adminVisitTransaction()
     {
-        $transactions = Transaction::all();
+        if (Auth::user()->hasRole('admin'))
+            $transactions = Transaction::all();
+        else
+        {
+            $orders = Order::where('user_id',Auth::user()->id)->pluck('id');
+            if (!empty($orders))
+                $transactions = Transaction::whereIn('id',$orders)->get();
+            else
+                $transactions = [];
+        }
         return view('admin.transaction.adminVisitTransaction',compact('transactions'));
     }
     //contact

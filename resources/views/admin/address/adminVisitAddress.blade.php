@@ -1,4 +1,4 @@
-@extends('admin.adminLayout')
+@extends('admin.layout.adminLayout')
 
 @section('content')
     <style type="text/css" class="init">
@@ -10,49 +10,49 @@
         }
 
     </style>
-    <script type="text/javascript" language="javascript" src="{{asset('/')}}adminassets/js/jq.dataTable.min.js">
+    <script type="text/javascript" language="javascript" src="{{asset('admin')}}/js/jq.dataTable.min.js">
     </script>
-    <script type="text/javascript" language="javascript" src="{{asset('/')}}adminassets/js/dataTables.bootstrap.min.js">
+    <script type="text/javascript" language="javascript" src="{{asset('admin')}}/js/dataTables.bootstrap.min.js">
     </script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             // Setup - add a text input to each footer cell
-            $('#orderTable tfoot th').each( function () {
+            $('#orderTable tfoot th').each(function () {
                 var title = $(this).text();
-                $(this).html( '<input class="form-control input-sm" type="text" placeholder="'+title+'" />' );
-            } );
+                $(this).html('<input class="form-control input-sm" type="text" placeholder="' + title + '" />');
+            });
 
             // DataTable
-            var table = $('#orderTable').DataTable( {
-                "order": [[ 0, "desc" ]]
-            } );
+            var table = $('#orderTable').DataTable({
+                "order": [[0, "desc"]]
+            });
 
             // Apply the search
-            table.columns().every( function () {
+            table.columns().every(function () {
                 var that = this;
 
-                $( 'input', this.footer() ).on( 'keyup change', function () {
-                    if ( that.search() !== this.value ) {
+                $('input', this.footer()).on('keyup change', function () {
+                    if (that.search() !== this.value) {
                         that
-                            .search( this.value )
+                            .search(this.value)
                             .draw();
                     }
-                } );
-            } );
-        } );
+                });
+            });
+        });
     </script>
     <section id="main-content">
         <section class="wrapper">
             <section class="panel">
                 <header class="panel-heading">
-                    مدیریت  آدرس ها
+                    مدیریت آدرس ها
 
 
                 </header>
                 <div class="container">
 
 
-                    <div   class="col-xs-12 col-sm-12 col-md-12 table-responsive">
+                    <div class="col-xs-12 col-sm-12 col-md-12 table-responsive">
                         <br/>
                         @include('include.showError')
                         @include('include.validationError')
@@ -82,49 +82,61 @@
                             </tr>
                             </tfoot>
                             <tbody>
-                                @foreach($addresses as $address)
-                            <tr>
-                                <td>{{ $address->id }}</td>
-                                <td>{{ $address->user->name }}</td>
-                                <td>{{ $address->zone->city->region->label }}</td>
-                                <td>{{ $address->zone->city->label }}</td>
-                                <td>{{ $address->zone->label }}</td>
-                                <td>{{ $address->detail }}</td>
-                                <td>
-                                    @if($address->status == 0)<p class="label label-warning" style="width: 250px">غیر فعال</p> @endif
-                                    @if($address->status == 1)<p class="label label-success" style="width: 250px">فعال</p> @endif
-                                </td>
-                                <td>
-                                    <a class="label label-danger" data-toggle="modal" href="#myModal{{ $address->id }}">حذف</a>
-                                </td>
+                            @if(isset($addresses))
+                            @foreach($addresses as $address)
+                                <tr>
+                                    <td>{{ $address->id }}</td>
+                                    <td>{{ $address->user->name }}</td>
+                                    <td>{{ $address->zone->city->region->label }}</td>
+                                    <td>{{ $address->zone->city->label }}</td>
+                                    <td>{{ $address->zone->label }}</td>
+                                    <td>{{ $address->detail }}</td>
+                                    <td>
+                                        @if($address->status == 0)
+                                            <p class="label label-warning" style="width: 250px">غیر فعال</p>
+                                        @endif
+                                        @if($address->status == 1)
+                                            <p class="label label-success" style="width: 250px">فعال</p>
+                                        @endif
+                                    </td>
+                                    <td>
+                                        <a class="label label-danger" data-toggle="modal"
+                                           href="#myModal{{ $address->id }}">حذف</a>
+                                    </td>
 
-                                <div class="modal fade" id="myModal{{ $address->id }}" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-                                                <h4 class="modal-title">حذف  دسترسی آزاد</h4>
-                                            </div>
-                                            <div class="modal-body">
-                                                ایا از این عمل اطمینان دارید؟
+                                    <div class="modal fade" id="myModal{{ $address->id }}" tabindex="-1" role="dialog"
+                                         aria-labelledby="myModalLabel" aria-hidden="true">
+                                        <div class="modal-dialog">
+                                            <div class="modal-content">
+                                                <div class="modal-header">
+                                                    <button type="button" class="close" data-dismiss="modal"
+                                                            aria-hidden="true">&times;
+                                                    </button>
+                                                    <h4 class="modal-title">حذف دسترسی آزاد</h4>
+                                                </div>
+                                                <div class="modal-body">
+                                                    ایا از این عمل اطمینان دارید؟
 
-                                            </div>
-                                            <div class="modal-footer">
-                                                <button data-dismiss="modal" class="btn btn-warning" type="button">خیر</button>
-                                                <a href="{{ route('adminDeleteAddress',$address->id) }}" class="btn btn-danger" type="button">آری</a>
+                                                </div>
+                                                <div class="modal-footer">
+                                                    <button data-dismiss="modal" class="btn btn-warning" type="button">
+                                                        خیر
+                                                    </button>
+                                                    <a href="{{ route('adminDeleteAddress',$address->id) }}"
+                                                       class="btn btn-danger" type="button">آری</a>
+                                                </div>
                                             </div>
                                         </div>
                                     </div>
-                                </div>
-                            </tr>
+                                </tr>
                             @endforeach
+                                @endif
                             </tbody>
 
                         </table>
                     </div>
 
                 </div>
-
 
 
             </section>
@@ -135,19 +147,19 @@
 
         //owl carousel
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#owl-demo").owlCarousel({
-                navigation : true,
-                slideSpeed : 300,
-                paginationSpeed : 400,
-                singleItem : true
+                navigation: true,
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                singleItem: true
 
             });
         });
 
         //custom select box
 
-        $(function(){
+        $(function () {
             $('select.styled').customSelect();
         });
 

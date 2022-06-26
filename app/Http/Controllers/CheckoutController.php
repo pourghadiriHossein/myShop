@@ -21,15 +21,11 @@ class CheckoutController extends Controller
 {
     public function checkoutIndex()
     {
-        if (Auth::guest()) {
-            return redirect(route('login'));
-        }else{
-            $regions = Region::all();
-            $cities = City::all();
-            $zones = Zone::all();
-            $addresses = Auth::user()->addresses;
-            return view('public.checkout.checkoutIndex',compact('regions','cities','zones','addresses'));
-        }
+        $regions = Region::all();
+        $cities = City::all();
+        $zones = Zone::all();
+        $addresses = Auth::user()->addresses;
+        return view('public.checkout.checkoutIndex',compact('regions','cities','zones','addresses'));
     }
     public function postCheckout(CheckoutRequest $request)
     {
@@ -122,6 +118,8 @@ class CheckoutController extends Controller
             return redirect(route('adminVisitTransaction'));
         $transaction = Transaction::find($request->input('order_id'));
         $IDPayID = $request->input('id');
+        if ($IDPayID != $transaction->IDPay_id)
+            return redirect(route('adminVisitTransaction'));
         $orderID = $request->input('order_id');
         $verify = new Gateway();
         $result = $verify->done($IDPayID, $orderID);
@@ -134,7 +132,6 @@ class CheckoutController extends Controller
         else {
             $transaction->status = $result->status;
             $transaction->IDPay_track_id = $result->track_id;
-            $transaction->IDPay_id = $result->id;
             $transaction->card_no = $result->payment->card_no;
             $transaction->pay_date = $result->date;
             $transaction->verify_date = $result->verify->date;

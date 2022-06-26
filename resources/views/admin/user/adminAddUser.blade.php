@@ -1,4 +1,4 @@
-@extends('admin.adminLayout')
+@extends('admin.layout.adminLayout')
 
 @section('content')
     <section id="main-content">
@@ -25,22 +25,28 @@
                             /* @var $form CActiveForm */
                             ?>
 
-                            <form class="form-horizontal" action="{{route('adminPostAddUser')}}" method="post" enctype="multipart/form-data">
+                            <form class="form-horizontal" action="{{route('adminPostAddUser')}}" method="post"
+                                  enctype="multipart/form-data">
                                 {{csrf_field()}}
                                 <fieldset title="اطلاعات پایه" class="step" id="default-step-0">
                                     <legend></legend>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">نام و نام خانوداگی</label>
+                                        <label class="col-lg-2 control-label">نام و نام خانوادگی</label>
                                         <div class="col-lg-10">
-                                            <input type="text" required="required" oninvalid="this.setCustomValidity('نمیتواند خالی باشد')"
-                                                   onchange="this.setCustomValidity('')" name="name" class="form-control" placeholder="نام و نام خانوداگی خود را وارد کنید">
+                                            <input type="text" required="required"
+                                                   oninvalid="this.setCustomValidity('نمیتواند خالی باشد')"
+                                                   onchange="this.setCustomValidity('')" name="name"
+                                                   class="form-control"
+                                                   placeholder="نام و نام خانوادگی خود را وارد کنید">
                                         </div>
                                     </div>
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">شماره تماس</label>
                                         <div class="col-lg-10">
-                                            <input type="text" required="required" oninvalid="this.setCustomValidity('نمیتواند خالی باشد')"
-                                                   onchange="this.setCustomValidity('')" name="phone" class="form-control" placeholder="شماره تماس خود را وارد کنید">
+                                            <input type="text" required="required"
+                                                   oninvalid="this.setCustomValidity('نمیتواند خالی باشد')"
+                                                   onchange="this.setCustomValidity('')" name="phone"
+                                                   class="form-control" placeholder="شماره تماس خود را وارد کنید">
                                             <div class="help-block with-errors"></div>
 
                                         </div>
@@ -48,8 +54,10 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">پست الکترونیک</label>
                                         <div class="col-lg-10">
-                                            <input type="text" required="required" oninvalid="this.setCustomValidity('نمیتواند خالی باشد')"
-                                                   onchange="this.setCustomValidity('')" name="email" class="form-control" placeholder="پست الکترونیک خود را وارد کنید">
+                                            <input type="text" required="required"
+                                                   oninvalid="this.setCustomValidity('نمیتواند خالی باشد')"
+                                                   onchange="this.setCustomValidity('')" name="email"
+                                                   class="form-control" placeholder="پست الکترونیک خود را وارد کنید">
                                             <div class="help-block with-errors"></div>
 
                                         </div>
@@ -57,8 +65,10 @@
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">رمز عبور</label>
                                         <div class="col-lg-10">
-                                            <input type="text" required="required" oninvalid="this.setCustomValidity('نمیتواند خالی باشد')"
-                                                   onchange="this.setCustomValidity('')" name="password" class="form-control" placeholder="رمز عبور خود را وارد کنید">
+                                            <input type="text" required="required"
+                                                   oninvalid="this.setCustomValidity('نمیتواند خالی باشد')"
+                                                   onchange="this.setCustomValidity('')" name="password"
+                                                   class="form-control" placeholder="رمز عبور خود را وارد کنید">
                                             <div class="help-block with-errors"></div>
 
                                         </div>
@@ -69,7 +79,7 @@
                                         <div class="col-lg-10">
                                             <select name="status" class="form-control" style="height: 40px">
                                                 <option value="0" selected>غیر فعال</option>
-                                                <option value="1" >فعال</option>
+                                                <option value="1">فعال</option>
                                             </select>
                                         </div>
                                     </div>
@@ -78,15 +88,15 @@
                                         <label class="col-lg-2 control-label">نقش کاربر</label>
                                         <div class="col-lg-10">
                                             <select name="role" class="form-control" style="height: 40px">
-                                            @foreach($roles as $role)
-                                                <option value="{{$role->id}}">{{$role->name}}</option>
-                                            @endforeach
+                                                @foreach($roles as $role)
+                                                    <option value="{{$role->id}}">{{$role->name}}</option>
+                                                @endforeach
                                             </select>
                                         </div>
                                     </div>
 
                                 </fieldset>
-                                <input type="submit" class="finish btn btn-danger" value="تایید" />
+                                <input type="submit" class="finish btn btn-danger" value="تایید"/>
                             </form>
                         </div>
                     </section>
@@ -110,7 +120,7 @@
     <script type="text/javascript" src="{{asset('/adminassets')}}/js/multiselect.min.js"></script>
 
     <script type="text/javascript">
-        jQuery(document).ready(function($) {
+        jQuery(document).ready(function ($) {
             $('#search1').multiselect({
                 search: {
                     left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
@@ -120,7 +130,7 @@
         });
     </script>
     <script type="text/javascript">
-        jQuery(document).ready(function($) {
+        jQuery(document).ready(function ($) {
             $('#search2').multiselect({
                 search: {
                     left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
@@ -147,27 +157,27 @@
         });
     </script>
     <script>
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#datepicker0").datepicker();
 
             $("#datepicker_captive").datepicker();
-            $("#datepicker_captivebtn").click(function(event) {
+            $("#datepicker_captivebtn").click(function (event) {
                 event.preventDefault();
                 $("#datepicker_captive").focus();
             })
             $("#datepicker_captive2").datepicker();
-            $("#datepicker_captive2btn").click(function(event) {
+            $("#datepicker_captive2btn").click(function (event) {
                 event.preventDefault();
                 $("#datepicker_captive2").focus();
             })
 
             $("#datepicker_war").datepicker();
-            $("#datepicker_warbtn").click(function(event) {
+            $("#datepicker_warbtn").click(function (event) {
                 event.preventDefault();
                 $("#datepicker_war").focus();
             })
             $("#datepicker_war2").datepicker();
-            $("#datepicker_war2btn").click(function(event) {
+            $("#datepicker_war2btn").click(function (event) {
                 event.preventDefault();
                 $("#datepicker_war2").focus();
             })
@@ -205,12 +215,12 @@
         function showCity(element) {
 
             var id = document.getElementById("region_id").options[document.getElementById("region_id").selectedIndex].value;
-            var link = "http://localhost/jabo/public/cities/"+id;
+            var link = "http://localhost/jabo/public/cities/" + id;
             var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
+            xmlhttp.onreadystatechange = function () {
                 document.getElementById("city_id").innerHTML = xmlhttp.responseText;
             }
-            xmlhttp.open("GET",link, true);
+            xmlhttp.open("GET", link, true);
             xmlhttp.send();
         }
     </script>
@@ -218,12 +228,12 @@
         function showZone(element) {
 
             var id = document.getElementById("city_id").options[document.getElementById("city_id").selectedIndex].value;
-            var link = "http://localhost/jabo/public/zones/"+id;
+            var link = "http://localhost/jabo/public/zones/" + id;
             var xmlhttp = new XMLHttpRequest();
-            xmlhttp.onreadystatechange = function() {
+            xmlhttp.onreadystatechange = function () {
                 document.getElementById("zone_id").innerHTML = xmlhttp.responseText;
             }
-            xmlhttp.open("GET",link, true);
+            xmlhttp.open("GET", link, true);
             xmlhttp.send();
         }
     </script>
@@ -232,19 +242,19 @@
 
         //owl carousel
 
-        $(document).ready(function() {
+        $(document).ready(function () {
             $("#owl-demo").owlCarousel({
-                navigation : true,
-                slideSpeed : 300,
-                paginationSpeed : 400,
-                singleItem : true
+                navigation: true,
+                slideSpeed: 300,
+                paginationSpeed: 400,
+                singleItem: true
 
             });
         });
 
         //custom select box
 
-        $(function(){
+        $(function () {
             $('select.styled').customSelect();
         });
 

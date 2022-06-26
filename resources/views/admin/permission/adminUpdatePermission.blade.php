@@ -1,4 +1,4 @@
-@extends('admin.adminLayout')
+@extends('admin.layout.adminLayout')
 
 @section('content')
     <section id="main-content">
@@ -17,24 +17,28 @@
 
                             <div class="form">
 
-                                <form class="form-horizontal" action="{{route('adminUpdatePermission',$permission->id)}}" method="post" data-toggle="validator" id="user-form">
+                                <form class="form-horizontal"
+                                      action="{{route('adminUpdatePermission',$permission->id)}}" method="post"
+                                      data-toggle="validator" id="user-form">
 
                                     {{csrf_field()}}
 
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">نام دسترسی</label>
                                         <div class="col-lg-10">
-                                            <input value="{{$permission->name}}" type="text" required="required" name="name" class="form-control" placeholder="نام دسترسی">
+                                            <input value="{{$permission->name}}" type="text" required="required"
+                                                   name="name" class="form-control" placeholder="نام دسترسی">
                                         </div>
                                     </div>
 
                                     <div class="form-group">
                                         <label class="col-lg-2 control-label">عنوان دسترسی</label>
                                         <div class="col-lg-10">
-                                            <input value="{{$permission->guard_name}}" type="text" name="guard_name" class="form-control" placeholder="عنوان دسترسی">
+                                            <input value="{{$permission->guard_name}}" type="text" name="guard_name"
+                                                   class="form-control" placeholder="عنوان دسترسی">
                                         </div>
                                     </div>
-                                    <input type="submit" class="finish btn btn-success" value="ذخیره" />
+                                    <input type="submit" class="finish btn btn-success" value="ذخیره"/>
                                 </form>
                             </div>
 
@@ -62,7 +66,7 @@
     <script type="text/javascript" src="{{ asset('/adminassets/') }}/js/multiselect.min.js"></script>
 
     <script type="text/javascript">
-        jQuery(document).ready(function($) {
+        jQuery(document).ready(function ($) {
             $('#search1').multiselect({
                 search: {
                     left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
@@ -72,7 +76,7 @@
         });
     </script>
     <script type="text/javascript">
-        jQuery(document).ready(function($) {
+        jQuery(document).ready(function ($) {
             $('#search2').multiselect({
                 search: {
                     left: '<input type="text" name="q" class="form-control" placeholder="Search..." />',
@@ -98,6 +102,5 @@
             });
         });
     </script>
-
 
 @endsection
