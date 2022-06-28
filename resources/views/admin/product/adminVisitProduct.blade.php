@@ -95,10 +95,14 @@
                                         @else
                                             {{$product->discount->label}}
                                         @endif</td>
-                                    <td>@if($product->product_tag_id == null)
+                                    <td>@if($product->tags == null)
                                             تگ ندارد
                                         @else
-                                            {{$product->productTag->label}}
+                                            <ul>
+                                                @foreach($product->tags as $tag)
+                                                    <li>{{$tag->label}}</li>
+                                                @endforeach
+                                            </ul>
                                         @endif</td>
                                     <td>@if($product->category_id == null)
                                             تخفیف ندارد

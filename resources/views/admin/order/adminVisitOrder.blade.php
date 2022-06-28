@@ -115,13 +115,18 @@
                                     <td>{{ $order->pay_price }} ریال</td>
                                     <td>
                                         @if($order->status == 0)
-                                            <p class="label label-warning" style="width: 250px">غیر فعال</p>
+                                            <p class="label label-warning" style="width: 250px">پرداخت نشده</p>
                                         @endif
                                         @if($order->status == 1)
-                                            <p class="label label-success" style="width: 250px">فعال</p>
+                                            <p class="label label-success" style="width: 250px">پرداخت شده</p>
                                         @endif
                                     </td>
                                     <td>
+                                        @if($order->status == 0)
+                                            <a class="label label-danger" href="{{route('sendForPay',$order->id)}}">پرداخت</a>
+                                            <br>
+                                            <br>
+                                        @endif
                                         <a class="label label-info" data-toggle="modal" href="#myModal{{$order->id}}">محصولات</a>
                                         <div class="modal fade" id="myModal{{$order->id}}" tabindex="-1" role="dialog"
                                              aria-labelledby="myModalLabel" aria-hidden="true">

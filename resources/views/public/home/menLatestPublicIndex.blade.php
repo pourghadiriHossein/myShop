@@ -39,7 +39,11 @@
                                     <h3 class="product-title">
                                         <a href="{{route('singleProduct',[$product->id,\App\Models\Tool::readyToUrl($product->label)])}}">@if($product->label){{$product->label}}@endif</a>
                                     </h3> <span class="product-categories">
-                                            @if($product->product_tag_id) <a href="{{route('categories.edit',$product->product_tag_id)}}" rel="tag">{{$product->productTag->label}}</a>, @endif
+                                           @if($product->tags)
+                                            @foreach($product->tags as $tag)
+                                                <a href="{{route('categories.edit',$tag->id)}}" rel="tag">{{$tag->label}}</a>,
+                                            @endforeach
+                                        @endif
                                         </span>
                                     <h3 class="price">
                                         @if($product->discount_id)

@@ -23,9 +23,9 @@ class Product extends Model
         return $this->belongsTo(Discount::class);
     }
 
-    public function productTag()
+    public function tags()
     {
-        return $this->belongsTo(ProductTag::class);
+        return $this->belongsToMany(Tag::class);
     }
 
     public function productImages()

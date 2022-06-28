@@ -91,10 +91,10 @@
                                     <td>{{ $contact->description }}</td>
                                     <td>
                                         @if($contact->status == 0)
-                                            <p class="label label-danger" style="width: 250px">دیده نشده</p>
+                                            <p class="label label-danger" style="width: 250px">بررسی نشده</p>
                                         @endif
                                         @if($contact->status == 1)
-                                            <p class="label label-success" style="width: 250px">دیده شده</p>
+                                            <p class="label label-success" style="width: 250px">بررسی شده</p>
                                         @endif
                                     </td>
                                 </tr>

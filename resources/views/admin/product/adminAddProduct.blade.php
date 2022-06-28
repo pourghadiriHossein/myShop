@@ -74,17 +74,6 @@
                                         </div>
                                     </div>
                                     <div class="form-group">
-                                        <label class="col-lg-2 control-label">وضعیت تگ</label>
-                                        <div class="col-lg-10">
-                                            <select name="product_tag_id" class="form-control" style="height: 40px">
-                                                <option value="{{null}}">تگ ندارد</option>
-                                                @foreach($tags as $tag)
-                                                    <option value="{{$tag->id}}">{{$tag->label}}</option>
-                                                @endforeach
-                                            </select>
-                                        </div>
-                                    </div>
-                                    <div class="form-group">
                                         <label class="col-lg-2 control-label">وضعیت دسته بندی</label>
                                         <div class="col-lg-10">
                                             <select name="category_id" class="form-control" style="height: 40px">
@@ -92,6 +81,16 @@
                                                     <option value="{{$category->id}}">{{$category->label}}</option>
                                                 @endforeach
                                             </select>
+                                        </div>
+                                    </div>
+                                    <div class="form-group">
+                                        <label class="col-lg-2 control-label">تگ ها</label>
+                                        <div class="col-lg-10">
+                                            @foreach($tags as $tag)
+                                                <label class="access_lvl">
+                                                    <input type="checkbox" name="tags[]" value="{{$tag->id}}"> &nbsp; {{$tag->label}}
+                                                </label>
+                                            @endforeach
                                         </div>
                                     </div>
                                     <div class="form-group">

@@ -55,7 +55,7 @@ class CheckoutController extends Controller
             }
             $newOrder->total_price = $total_price;
             $newOrder->pay_price = $total_price - $totalDiscount;
-            $newOrder->status = 1;
+            $newOrder->status = 0;
             $newOrder->save();
 
             foreach($baskets as $basket)
@@ -72,20 +72,19 @@ class CheckoutController extends Controller
             $newTransaction = new Transaction();
             $newTransaction->order_id = $newOrder->id;
             $newTransaction->amount = $newOrder->pay_price;
-            $newTransaction->save();
             $newGateway = new Gateway();
-            $result = $newGateway->start($newTransaction->id,$newOrder->pay_price);
+            $result = $newGateway->start($newOrder->id,$newOrder->pay_price);
             if (isset($result->error_code))
             {
                 $newTransaction->status = $result->error_code;
-                $newTransaction->update();
+                $newTransaction->save();
                 Tool::clean();
                 Tool::cleanTokenDiscount();
-                return redirect(route('adminVisitTransaction'));
+                return redirect(route('adminVisitOrder'));
             }
             else{
                 $newTransaction->IDPay_id = $result->id;
-                $newTransaction->update();
+                $newTransaction->save();
                 Tool::clean();
                 Tool::cleanTokenDiscount();
                 return redirect($result->link);
@@ -94,20 +93,23 @@ class CheckoutController extends Controller
             return redirect(route('publicHome'));
     }
 
-    public function sendForPay($transactionID)
+    public function sendForPay($orderID)
     {
-        $transaction = Transaction::find($transactionID);
+        $order = Order::find($orderID);
         $newGateway = new Gateway();
-        $result = $newGateway->start($transaction->id,$transaction->amount);
+        $newTransaction = new Transaction();
+        $newTransaction->order_id = $order->id;
+        $newTransaction->amount = $order->pay_price;
+        $result = $newGateway->start($order->id,$order->pay_price);
         if (isset($result->error_code))
         {
-            $transaction->status = $result->error_code;
-            $transaction->save();
-            return redirect(route('adminVisitTransaction'));
+            $newTransaction->status = $result->error_code;
+            $newTransaction->save();
+            return redirect(route('adminVisitOrder'));
         }
         else{
-            $transaction->IDPay_id = $result->id;
-            $transaction->save();
+            $newTransaction->IDPay_id = $result->id;
+            $newTransaction->save();
             return redirect($result->link);
         }
     }
@@ -115,12 +117,10 @@ class CheckoutController extends Controller
     public function callback(Request $request)
     {
         if (!$request->input('order_id'))
-            return redirect(route('adminVisitTransaction'));
-        $transaction = Transaction::find($request->input('order_id'));
+            return redirect(route('adminVisitOrder'));
         $IDPayID = $request->input('id');
-        if ($IDPayID != $transaction->IDPay_id)
-            return redirect(route('adminVisitTransaction'));
         $orderID = $request->input('order_id');
+        $transaction = Transaction::where([['order_id', $orderID],['IDPay_id',$IDPayID]])->first();
         $verify = new Gateway();
         $result = $verify->done($IDPayID, $orderID);
         if (isset($result->error_code))
@@ -136,6 +136,9 @@ class CheckoutController extends Controller
             $transaction->pay_date = $result->date;
             $transaction->verify_date = $result->verify->date;
             $transaction->save();
+            $order = Order::find($request->input('order_id'));
+            $order->status = 1;
+            $order->save();
             return redirect(route('adminVisitTransaction'));
         }
     }

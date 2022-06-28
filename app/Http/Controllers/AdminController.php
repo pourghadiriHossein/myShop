@@ -3,10 +3,10 @@
 namespace App\Http\Controllers;
 
 use App\Models\ProductImage;
+use App\Models\Tag;
 use App\Models\Tool;
 use App\Models\User;
 use App\Models\Category;
-use App\Models\ProductTag;
 use App\Models\Discount;
 use App\Models\Product;
 use App\Models\Comment;
@@ -232,7 +232,7 @@ class AdminController extends Controller
     //tag
     public function adminVisitTag()
     {
-        $tags = ProductTag::all();
+        $tags = Tag::all();
         return view('admin.tag.adminVisitTag',compact('tags'));
     }
 
@@ -243,12 +243,12 @@ class AdminController extends Controller
 
     public function adminUpdateTag($tagId)
     {
-        $tag = ProductTag::find($tagId);
+        $tag = Tag::find($tagId);
         return view('admin.tag.adminUpdateTag',compact('tag'));
     }
     public function adminPostAddTag(Request $request)
     {
-        $newTag = new ProductTag();
+        $newTag = new Tag();
         $newTag->label = $request->input('label');
         $newTag->status = $request->input('status');
         $newTag->save();
@@ -256,7 +256,7 @@ class AdminController extends Controller
     }
     public function adminPostUpdateTag(Request $request,$tagId)
     {
-        $updateTag = ProductTag::find($tagId);
+        $updateTag = Tag::find($tagId);
         $updateTag->label = $request->input('label');
         $updateTag->status = $request->input('status');
         $updateTag->save();
@@ -307,30 +307,31 @@ class AdminController extends Controller
     }
     public function adminAddProduct()
     {
+        $tags = Tag::all();
         $discounts = Discount::all();
-        $tags = ProductTag::all();
         $categories = Category::all();
         return view('admin.product.adminAddProduct', compact('discounts','tags','categories'));
     }
     public function adminUpdateProduct($productID)
     {
+        $tags = Tag::all();
         $discounts = Discount::all();
-        $tags = ProductTag::all();
         $categories = Category::all();
         $product = Product::find($productID);
-        return view('admin.product.adminUpdateProduct',compact('discounts','tags','categories','product'));
+        $selectedTag = $product->tags->pluck('label')->toArray();
+        return view('admin.product.adminUpdateProduct',compact('discounts','tags','categories','product','selectedTag'));
     }
     public function adminPostAddProduct(Request $request)
     {
         $newProduct = new Product();
         $newProduct->discount_id = $request->input('discount_id');
-        $newProduct->product_tag_id = $request->input('product_tag_id');
         $newProduct->category_id = $request->input('category_id');
         $newProduct->label = $request->input('label');
         $newProduct->description = $request->input('description');
         $newProduct->price = $request->input('price');
         $newProduct->status = $request->input('status');
         $newProduct->save();
+        $newProduct->tags()->sync($request->input('tags'));
         $paths = [];
         foreach ($request->file('images') as $image)
         {
@@ -350,13 +351,13 @@ class AdminController extends Controller
 
         $updateProduct = Product::find($productId);
         $updateProduct->discount_id = $request->input('discount_id');
-        $updateProduct->product_tag_id = $request->input('product_tag_id');
         $updateProduct->category_id = $request->input('category_id');
         $updateProduct->label = $request->input('label');
         $updateProduct->description = $request->input('description');
         $updateProduct->price = $request->input('price');
         $updateProduct->status = $request->input('status');
         $updateProduct->save();
+        $updateProduct->tags()->sync($request->input('tags'));
         if ($request->hasFile('images'))
         {
             $paths = [];

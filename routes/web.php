@@ -20,6 +20,7 @@ Route::get('/session/{product_id}/{quantity}/{session_task}',[Controller::class,
 Route::get('/',[HomeController::class,'publicHome'])->name('publicHome');
 Route::get('/term-and-conditions',[TCController::class,'publicTC'])->name('publicTC');
 Route::get('/contact',[ContactController::class, 'publicContact'])->name('publicContact');
+Route::post('/contact',[ContactController::class,'postContact'])->name('postContact');
 Route::get('/FAQ',[FAQController::class, 'publicFAQ'])->name('publicFAQ');
 
 //show Product

@@ -2,11 +2,11 @@
 
 namespace Database\Seeders;
 
-use App\Models\ProductTag;
+use App\Models\Tag;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 
-class ProductTagSeeder extends Seeder
+class TagSeeder extends Seeder
 {
     /**
      * Run the database seeds.
@@ -22,6 +22,6 @@ class ProductTagSeeder extends Seeder
             ['label' => 'مقاوم'],
         ];
 
-        ProductTag::insert($productTags);
+        Tag::insert($productTags);
     }
 }

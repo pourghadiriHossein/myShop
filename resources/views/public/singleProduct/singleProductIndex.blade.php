@@ -58,7 +58,7 @@
                                     <input onclick="decrement()" type="button" value="-" class="minus">
                                     <input id="demoInput" class="input-text qty text" min="1" name="quantity" step="1" title="demoInput" type="number" value="1">
                                     <input onclick="increment()" type="button" value="+" class="plus">
-                                    
+
                                 </div>
                                 <button class="single_add_to_cart_button button alt" type="submit">افزودن به سبد خرید</button>
                                 </form>
@@ -67,7 +67,11 @@
                                     <a href="{{route('categories.show',$product->category->id)}}" rel="tag">{{$product->category->label}}</a>
                                 </span>
                                     <span class="tagged_as">تگ ها:
-                                    @if($product->product_tag_id) <a href="{{route('categories.edit',$product->product_tag_id)}}" rel="tag">{{$product->productTag->label}}</a> @endif
+                                        @if($product->tags)
+                                            @foreach($product->tags as $tag)
+                                                <a href="{{route('categories.edit',$tag->id)}}" rel="tag">{{$tag->label}}</a>,
+                                            @endforeach
+                                        @endif
                                 </span> </div>
 
                             </div>
@@ -79,7 +83,7 @@
                             <div class="tabbable top">
                                 <ul class="nav nav-tabs" data-tabs="tabs">
                                     <li class="active"> <a data-toggle="tab" href="#tab-description">توضیحات</a> </li>
-                                    <li> <a data-toggle="tab" href="#tab-reviews">نظر ها (0)</a> </li>
+                                    <li> <a data-toggle="tab" href="#tab-reviews">نظر ها ({{count($productComments)}})</a> </li>
                                 </ul>
                                 <div class="tab-content">
                                     <div class="tab-pane active" id="tab-description">
@@ -149,7 +153,11 @@
                                             <h3 class="product-title">
                                                 <a href="{{route('singleProduct',[$newestProduct->id,\App\Models\Tool::readyToUrl($newestProduct->label)])}}">{{$newestProduct->label}}</a>
                                             </h3> <span class="product-categories">
-                                            @if($newestProduct->product_tag_id) <a href="{{route('categories.edit',$newestProduct->product_tag_id)}}" rel="tag">{{$newestProduct->productTag->label}}</a>, @endif
+                                            @if($newestProduct->tags)
+                                                    @foreach($newestProduct->tags as $tag)
+                                                        <a href="{{route('categories.edit',$tag->id)}}" rel="tag">{{$tag->label}}</a>,
+                                                    @endforeach
+                                                @endif
                                             <h3 class="price">
                                                 @if($newestProduct->discount_id)
                                                     <del><span class="amount">{{$newestProduct->price}} ريال</span></del>

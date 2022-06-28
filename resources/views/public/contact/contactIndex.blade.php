@@ -59,19 +59,22 @@
                                     <div class="visible-md element-height-20"></div>
                                     <div class="visible-lg element-height-20"></div>
                                 </div>
-                                <form action="" class="contact-form">
+                                @include('include.showError')
+                                @include('include.validationError')
+                                <form action="{{route('postContact')}}" method="post" class="contact-form">
+                                    {{csrf_field()}}
                                     <div class="row">
                                         <div class="col-md-6 pull-right">
                                             <div class="form-group form-icon-group"> <i class="fa fa-user"></i>
-                                                <input class="form-control" id="name" name="name" placeholder="نام خود را وارد کنید" type="text"> </div>
+                                                <input value="{{old('name')}}" class="form-control" id="name" name="name" placeholder="نام خود را وارد کنید" type="text"> </div>
                                         </div>
                                         <div class="col-md-6">
                                             <div class="form-group form-icon-group"> <i class="fa fa-envelope"></i>
-                                                <input class="form-control" id="phone" name="phone" placeholder="شماره تماس خود را وارد کنید" type="text"> </div>
+                                                <input value="{{old('phone')}}" class="form-control" id="phone" name="phone" placeholder="شماره تماس خود را وارد کنید" type="text"> </div>
                                         </div>
                                     </div>
                                     <div class="form-group form-icon-group"> <i class="fa fa-pencil"></i>
-                                        <textarea class="form-control" id="description" name="description" placeholder="پیام خود را برای ما بنویسید" rows="10"></textarea>
+                                        <textarea class="form-control" id="description" name="description" placeholder="پیام خود را برای ما بنویسید" rows="10">{{old('description')}}</textarea>
                                     </div>
                                     <p>
                                         <input type="submit" value="ارسال شود" class="btn btn-primary pull-right"> </p>

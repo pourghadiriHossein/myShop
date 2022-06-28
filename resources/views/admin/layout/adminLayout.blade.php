@@ -81,8 +81,8 @@
                     @elseif(Route::currentRouteName() == 'adminUpdateUser')
                     class="sub-menu active"
                     @else
-                    class="sub-menu">
-                    @endif
+                    class="sub-menu"
+                    @endif>
                     <a href="javascript:;" class="">
                         <i class="icon-user"></i>
                         <span>کاربرها</span>

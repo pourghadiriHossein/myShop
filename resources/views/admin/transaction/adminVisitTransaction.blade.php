@@ -68,7 +68,6 @@
                                 <th style="text-align: right">زمان پرداخت</th>
                                 <th style="text-align: right">زمان تایید پرداخت</th>
                                 <th style="text-align: right">وضعیت</th>
-                                <th style="text-align: right">امکانات</th>
                             </tr>
                             </thead>
                             <tfoot style="direction: rtl;">
@@ -82,7 +81,6 @@
                                 <th style="text-align: right">زمان پرداخت</th>
                                 <th style="text-align: right">زمان تایید پرداخت</th>
                                 <th style="text-align: right">وضعیت</th>
-                                <th style="text-align: right">امکانات</th>
                             </tr>
                             </tfoot>
                             <tbody>
@@ -95,16 +93,18 @@
                                     <td>{{ $transaction->IDPay_track_id }}</td>
                                     <td>{{ $transaction->IDPay_id }}</td>
                                     <td>{{ $transaction->card_no }}</td>
-                                    <td>{{ $transaction->pay_date }}</td>
-                                    <td>{{ $transaction->verify_date }}</td>
                                     <td>
-                                        {!!\App\Models\Gateway::gatewayStatusCode($transaction->status)!!}
+                                        @if($transaction->pay_date)
+                                        {{ verta($transaction->pay_date) }}
+                                        @endif
                                     </td>
                                     <td>
-                                        @if($transaction->status != 100 && $transaction->status != 101)
-                                            <a class="label label-info" href="{{route('sendForPay',$transaction->id)}}">پرداخت</a>
-                                        @else
+                                        @if($transaction->verify_date)
+                                        {{ verta($transaction->verify_date) }}
                                         @endif
+                                    </td>
+                                    <td>
+                                        {!!\App\Models\Gateway::gatewayStatusCode($transaction->status)!!}
                                     </td>
                                 </tr>
                             @endforeach

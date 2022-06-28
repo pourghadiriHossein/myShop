@@ -89,7 +89,7 @@ class Tool
 
     public static function getAllTag()
     {
-        $allTag = ProductTag::all();
+        $allTag = Tag::all();
         return $allTag;
     }
 

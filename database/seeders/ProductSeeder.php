@@ -6,6 +6,7 @@ use App\Models\Product;
 use App\Models\ProductImage;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\DB;
 
 class ProductSeeder extends Seeder
 {
@@ -22,7 +23,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 1,
                 'discount_id' => null,
-                'product_tag_id' => null,
                 'category_id' => 3,
                 'label' => 'ژاکت مدل نیوجرسی',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -31,7 +31,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 2,
                 'discount_id' => 1,
-                'product_tag_id' => 2,
                 'category_id' => 3,
                 'label' => 'ژاکت مردانه',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -40,7 +39,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 3,
                 'discount_id' => null,
-                'product_tag_id' => 2,
                 'category_id' => 3,
                 'label' => 'هودی اسپرت',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -49,7 +47,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 4,
                 'discount_id' => null,
-                'product_tag_id' => 3,
                 'category_id' => 3,
                 'label' => 'پیراهن لی اسپرت',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -58,7 +55,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 5,
                 'discount_id' => 3,
-                'product_tag_id' => 4,
                 'category_id' => 3,
                 'label' => 'پیراهن سیاه اسپرت',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -67,7 +63,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 6,
                 'discount_id' => 3,
-                'product_tag_id' => 4,
                 'category_id' => 3,
                 'label' => 'هودی صورمه ای',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -77,7 +72,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 7,
                 'discount_id' => 2,
-                'product_tag_id' => 2,
                 'category_id' => 4,
                 'label' => 'دامن سفید',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -86,7 +80,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 8,
                 'discount_id' => 1,
-                'product_tag_id' => 2,
                 'category_id' => 4,
                 'label' => 'دامن آر آر',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -95,7 +88,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 9,
                 'discount_id' => null,
-                'product_tag_id' => 3,
                 'category_id' => 4,
                 'label' => 'شلوار لی زنانه',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -104,7 +96,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 10,
                 'discount_id' => null,
-                'product_tag_id' => 2,
                 'category_id' => 4,
                 'label' => 'تاپ مجلس',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -113,7 +104,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 11,
                 'discount_id' => 1,
-                'product_tag_id' => 2,
                 'category_id' => 4,
                 'label' => 'تاپ مشکی',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -122,7 +112,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 12,
                 'discount_id' => null,
-                'product_tag_id' => 1,
                 'category_id' => 4,
                 'label' => 'لباس مجلسی',
                 'description' => 'لباس مناسب با کیفیت عالی',
@@ -132,7 +121,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 13,
                 'discount_id' => null,
-                'product_tag_id' => null,
                 'category_id' => 5,
                 'label' => 'کیف کروئلا',
                 'description' => 'کیف مناسب با کیفیت عالی',
@@ -141,7 +129,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 14,
                 'discount_id' => 1,
-                'product_tag_id' => 2,
                 'category_id' => 5,
                 'label' => 'کیف قرمز مخملی',
                 'description' => 'کیف مناسب با کیفیت عالی',
@@ -150,7 +137,6 @@ class ProductSeeder extends Seeder
             [
                 'id' => 15,
                 'discount_id' => null,
-                'product_tag_id' => 3,
                 'category_id' => 5,
                 'label' => 'کیف چرمی درجه یک',
                 'description' => 'کیف مناسب با کیفیت عالی',
@@ -285,5 +271,30 @@ class ProductSeeder extends Seeder
             ],
         ];
         ProductImage::insert($productImages);
+        $productTags = [
+            ['product_id' => 1 ,'tag_id'=> 1],
+            ['product_id' => 1 ,'tag_id'=> 2],
+            ['product_id' => 2 ,'tag_id'=> 3],
+            ['product_id' => 3 ,'tag_id'=> 3],
+            ['product_id' => 4 ,'tag_id'=> 4],
+            ['product_id' => 4 ,'tag_id'=> 1],
+            ['product_id' => 5 ,'tag_id'=> 4],
+            ['product_id' => 5 ,'tag_id'=> 2],
+            ['product_id' => 5 ,'tag_id'=> 3],
+            ['product_id' => 6 ,'tag_id'=> 2],
+            ['product_id' => 7 ,'tag_id'=> 2],
+            ['product_id' => 8 ,'tag_id'=> 1],
+            ['product_id' => 8 ,'tag_id'=> 4],
+            ['product_id' => 9 ,'tag_id'=> 2],
+            ['product_id' => 10 ,'tag_id'=> 3],
+            ['product_id' => 10 ,'tag_id'=> 4],
+            ['product_id' => 11 ,'tag_id'=> 2],
+            ['product_id' => 12 ,'tag_id'=> 1],
+            ['product_id' => 12 ,'tag_id'=> 3],
+            ['product_id' => 13 ,'tag_id'=> 2],
+            ['product_id' => 14 ,'tag_id'=> 2],
+            ['product_id' => 15 ,'tag_id'=> 4],
+        ];
+        DB::table('product_tag')->insert($productTags);
     }
 }
