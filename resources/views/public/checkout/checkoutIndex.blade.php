@@ -40,30 +40,15 @@
                                             <input class="input-checkbox" name="newAddress" type="checkbox" value="1">
                                             <h3>ارسال به آدرس جدید</h3> </label>
                                     </div>
-                                    
+
                                     <p>
-                                        <label>استان </label>
-                                        <select id="demo-hierarchical-pickers-region" data-dropdown="true" class="country_to_state form-control" name="regionID">
-                                            @foreach($regions as $region)
-                                                <<option value="{{$region->id}}"> {{$region->label}} </option>
-                                            @endforeach
-                                        </select>
-                                    </p>
-                                    <p>
-                                        <label>شهر </label>
-                                        <select class="country_to_state form-control" id="cityID" name="city_id">
-                                            @foreach($cities as $city)
-                                                <option value="{{$city->id}}"> {{$city->label}} </option>
-                                            @endforeach
-                                        </select>
-                                    </p>
-                                    <p>
-                                        <label>ناحیه </label>
-                                        <select class="country_to_state form-control" id="zoneID" name="zoneID">
+                                        <label>کد ناحیه </label>
+                                        <input class="country_to_state form-control" list="zoneID" name="zoneID">
+                                        <datalist id="zoneID">
                                             @foreach($zones as $zone)
-                                                <option value="{{$zone->id}}"> {{$zone->label}} </option>
+                                                <option value="{{$zone->id}}"> {{$zone->city->region->label.' - '.$zone->city->label.' - '.$zone->label}} </option>
                                             @endforeach
-                                        </select>
+                                        </datalist>
                                     </p>
                                     <p>
                                         <label> جزئیات آدرس  </label>
